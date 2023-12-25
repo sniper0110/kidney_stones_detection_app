@@ -26,7 +26,7 @@ if __name__=="__main__":
 
             # To convert to a PIL Image:
             original_img = Image.open(uploaded_file)
-            modified_img = np.array(original_img.copy(), dtype=np.int8)
+            modified_img = np.array(original_img.copy())
             
             # Display the image
             # st.image(image, caption='Uploaded Image.', use_column_width=True)
