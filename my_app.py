@@ -31,8 +31,8 @@ if __name__=="__main__":
             # Display the image
             # st.image(image, caption='Uploaded Image.', use_column_width=True)
 
-        if st.button("analyze"):
-            analyze_clicked = True
+            if st.button("analyze"):
+                analyze_clicked = True
 
     with col2:
         if original_img:
