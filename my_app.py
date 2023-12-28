@@ -2,16 +2,19 @@ import streamlit as st
 import cv2
 from PIL import Image
 import numpy as np
+from detection_model import KidneyStonesDetectionModel
+
+
 
 
 if __name__=="__main__":
 
-    # img_path = "Z:\\Datasets\\bone_fracture_dataset\\test\\images\\4_jpg.rf.31657c59b73817566ddb372f37d0db09.jpg"
-    # original_img = cv2.imread(img_path)
-    # modified_img = original_img.copy()
+    model_path = "./ks_detection.pt"
+    model = KidneyStonesDetectionModel(model_path=model_path)
+
     original_img = None
 
-    st.title('Bone Fracture Detection')
+    st.title('Kidney Stones Detection')
 
     col1, col2, col3 = st.columns([1, 1, 1])
 
@@ -26,7 +29,7 @@ if __name__=="__main__":
 
             # To convert to a PIL Image:
             original_img = Image.open(uploaded_file)
-            modified_img = np.array(original_img.copy())
+            modified_img = np.array(original_img.copy()) # This is an RGB image
             
             # Display the image
             # st.image(image, caption='Uploaded Image.', use_column_width=True)
@@ -41,8 +44,15 @@ if __name__=="__main__":
     with col3:
 
         if analyze_clicked:
-            cv2.circle(modified_img, [15, 15], 10, [0, 255, 0], 2)
-            st.image(modified_img)
+            
+            print("Running inference..")
+            model.run_inference(image=original_img)
+            # model.run_inference(image=modified_img)
+
+            print("Drawing results on image..")
+            image_with_detections = model.draw_bboxes_on_image(image=modified_img)
+
+            st.image(image_with_detections)
             analyze_clicked = False
 
 
