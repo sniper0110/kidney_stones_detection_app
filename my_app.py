@@ -15,32 +15,31 @@ if __name__=="__main__":
 
     st.title('Kidney Stones Detection')
 
-    col1, col2, col3 = st.columns([1, 1, 1])
-
     analyze_clicked = False
 
+    uploaded_file = st.file_uploader("", type=['jpg', 'jpeg', 'png'])
+
+    if uploaded_file is not None:
+        # To read file as bytes:
+        bytes_data = uploaded_file.getvalue()
+
+        # To convert to a PIL Image:
+        original_img = Image.open(uploaded_file)
+        modified_img = np.array(original_img.copy()) # This is an RGB image
+        
+        # Display the image
+        # st.image(image, caption='Uploaded Image.', use_column_width=True)
+
+        if st.button("analyze"):
+            analyze_clicked = True
+
+    col1, col2 = st.columns([1, 1])
+
     with col1:
-        uploaded_file = st.file_uploader("", type=['jpg', 'jpeg', 'png'])
-
-        if uploaded_file is not None:
-            # To read file as bytes:
-            bytes_data = uploaded_file.getvalue()
-
-            # To convert to a PIL Image:
-            original_img = Image.open(uploaded_file)
-            modified_img = np.array(original_img.copy()) # This is an RGB image
-            
-            # Display the image
-            # st.image(image, caption='Uploaded Image.', use_column_width=True)
-
-            if st.button("analyze"):
-                analyze_clicked = True
-
-    with col2:
         if original_img:
             st.image(original_img)
 
-    with col3:
+    with col2:
 
         if analyze_clicked:
             

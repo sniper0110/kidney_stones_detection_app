@@ -12,7 +12,7 @@ class KidneyStonesDetectionModel:
 
 
     def run_inference(self, image):
-        self.results = self.model(image, conf=0.75)
+        self.results = self.model(image, conf=0.1)
 
     def draw_bboxes_on_image(self, image):
 
@@ -28,7 +28,7 @@ class KidneyStonesDetectionModel:
 
                 x1, y1 = int(b[0]), int(b[1])
                 x2, y2 = int(b[2]), int(b[3])
-                
+
                 cv2.rectangle(modif_image, [x1, y1], [x2, y2], (0, 255, 0), 1)
 
         return modif_image
